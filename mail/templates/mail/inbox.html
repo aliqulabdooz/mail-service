@@ -1,0 +1,43 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>{{ request.user.email }}</h2>
+
+    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
+    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
+    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
+    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+    <h3 id="title"></h3>
+    <div id="email-endpoint" data-url-template="{% url 'mailbox' 'PLACEHOLDER' %}"></div>
+    <div id="emails-view">
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group">
+                <label for="from">From: </label> <input id="from" disabled class="form-control"
+                                                        value="{{ request.user.email }}" name="from">
+            </div>
+            <div class="form-group">
+                <label for="compose-recipients">To: </label> <input id="compose-recipients" class="form-control"
+                                                                    name="to">
+            </div>
+            <div class="form-group">
+                <label for="compose-subject">Subject: </label><input class="form-control" id="compose-subject"
+                                                                     name="subject" placeholder="Subject">
+            </div>
+            <label for="compose-body">Body: </label><textarea class="form-control" id="compose-body" placeholder="Body"
+                                                              name="body"></textarea>
+            <input type="submit" class="btn btn-primary mt-3"/>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'mail/inbox.js' %}"></script>
+
+{% endblock %}
